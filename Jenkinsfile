@@ -8,6 +8,9 @@ pipeline{
             podRetention never()
         }
     }
+    environment{
+        image_name = 'vin1711/fiber_react_frontend'
+    }
     options{
         skipDefaultCheckout()
     }
@@ -22,6 +25,19 @@ pipeline{
             steps{
                 sh 'npm install'
                 sh 'npm run build'
+            }
+        }
+        
+        stage('Create docker Image'){
+            steps{
+                container('docker'){
+                    sh "docker build -t ${image_name}:${BUILD_ID} -t ${image_name}"
+                    withCredentials([usernamePassword(credentialsId:'dockerCred',usernameVariable:'user',passwordVariable:'passwd')]){
+                        sh "docker login -u $user -p $passwd"
+                        sh "docker push ${image_name}:${BUILD_ID}"
+                        sh "docker push ${image_name}"
+                    }
+                }
             }
         }
     }
