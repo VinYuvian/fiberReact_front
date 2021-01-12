@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-deploy
+  namespace: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: react
+  template:
+    metadata:
+      labels:
+        name: react
+    spec:
+      containers:
+      - name: react
+        image: vin1711/fiber_react_frontend:latest
+        #command: ["sleep","60"]
+        ports:
+        - name: http
+          containerPort: 80
+        volumeMounts:
+        - name: config
+          mountPath: /usr/share/nginx/html/config.js
+          subPath: config.js
+        - name: nginx-cm
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: config
+        configMap:
+          name: react-conf
+      - name: nginx-cm
+        configMap:
+          name: nginx-conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-service
+  namespace: jenkins
+spec:
+  selector:
+    name: react
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  type: NodePort
+  
