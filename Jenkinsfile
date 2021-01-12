@@ -8,14 +8,12 @@ pipeline{
             podRetention never()
         }
     }
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '2',dayToKeep: '1'))
-    }
     environment{
         image_name = 'vin1711/fiber_react_frontend'
     }
     options{
         skipDefaultCheckout()
+        buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '2',dayToKeep: '1'))
     }
     stages{
         stage('checkout'){
