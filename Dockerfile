@@ -14,10 +14,10 @@
 #RUN npm run build
 
 FROM nginx:1.15
-COPY build/ /usr/share/nginx/html
+COPY /build/ /usr/share/nginx/html
 # Copy the default nginx.conf provided by tiangolo/node-frontend
 RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY /nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]
