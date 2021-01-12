@@ -6,8 +6,10 @@ spec:
   containers:
     - name: react
       image: node:alpine3.12
+      command: ["tail","-f","/dev/null"]
     - name: docker
       image: docker:18.06.1
+      command: ["tail","-f","/dev/null"]
       volumeMounts:
         - name: docker
           mountPath: /var/run/docker.sock
