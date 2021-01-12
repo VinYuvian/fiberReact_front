@@ -31,7 +31,7 @@ pipeline{
         stage('Create docker Image'){
             steps{
                 container('docker'){
-                    sh "docker build -t ${image_name}:${BUILD_ID} -t ${image_name}"
+                    sh "docker build -t ${image_name}:${BUILD_ID} -t ${image_name} ."
                     withCredentials([usernamePassword(credentialsId:'dockerCred',usernameVariable:'user',passwordVariable:'passwd')]){
                         sh "docker login -u $user -p $passwd"
                         sh "docker push ${image_name}:${BUILD_ID}"
