@@ -13,7 +13,7 @@ pipeline{
     }
     options{
         skipDefaultCheckout()
-        buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '2',dayToKeep: '1'))
+        buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '2',daysToKeepStr: '1'))
     }
     stages{
         stage('checkout'){
