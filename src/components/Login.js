@@ -17,7 +17,9 @@ class Login extends React.Component{
         e.preventDefault();
         console.log(this.state);
         axios.post('/api/Login',this.state).then(function (response) {
-            console.log(response.data);
+            const token = response.data.token;
+            localStorage.setItem('jwtToken',token);
+            setAuth(token);
           })
           .catch(function (error) {
             console.log(error);

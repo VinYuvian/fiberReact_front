@@ -28,7 +28,7 @@ class LoginForm extends React.Component{
     onSubmit = (e) => {
         e.preventDefault();
         //console.log(this.state);
-        axios.post(window.REACT_APP_API_URL+'/api/Signup',this.state).then(function (response) {
+        axios.post('/api/Signup',this.state).then(function (response) {
             console.log(response.data);
           })
           .catch(function (error) {
